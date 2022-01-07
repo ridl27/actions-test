@@ -1,0 +1,8 @@
+name: my 1st ever action
+on: [push]
+jobs:
+  print-hello-world:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "hello world!" # bash commands
+      - run: echo "step numba 2 :O"
