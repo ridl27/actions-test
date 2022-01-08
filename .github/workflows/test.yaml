@@ -3,6 +3,27 @@ on: [push]
 jobs:
   print-hello-world:
     runs-on: ubuntu-latest
+    outputs:
+      text: ${{ steps.shared.text }} # шарим змінну
     steps:
       - run: echo "hello world!" # bash commands
-      - run: echo "step numba 2 :O"
+      # - run: echo "step numba 2 :O"
+      - uses: actions/checkout@v2 # гуглим і див. які парами мон задать, коли тре
+      # - run: tree
+      - uses: actions/setup-node@v2
+      # - run: node -v
+      - name: Print node version # задали ім"я нашому run-у
+        run: node -v
+      # - run: npm i
+      # - run: npm run build
+      - name: data sharing
+        id: shared # дали id для степа
+        run: echo "::set-output name=text::hello-from-first-job" # створ змінну text для шаринга
+  second-job: # Dependent Job!
+    needs: print-hello-world # depends on..
+    runs-on: ubuntu-latest
+    env: 
+      MY_SHARED_TEXT: ${{ needs.print-hello-world.outputs.text }} # юзаєм змінну
+    steps:
+      - run: echo "2nd job"
+      - run: echo $MY_SHARED_TEXT # юзаєм змінну
