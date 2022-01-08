@@ -4,7 +4,7 @@ jobs:
   print-hello-world:
     runs-on: ubuntu-latest
     outputs:
-      text: ${{ steps.shared.text }} # шарим змінну
+      text: ${{ steps.shared.outputs.text }} # шарим змінну
     steps:
       - run: echo "hello world!" # bash commands
       # - run: echo "step numba 2 :O"
